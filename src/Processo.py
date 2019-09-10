@@ -188,16 +188,16 @@ class Processo(object):
 		self.cpuBursts[0] -= tempo
 
 	def subQuantum(self):
-		print 'REDUCAO DE CPU BURST (quantum)'
-		print 'tempo ', self.quantum
-		print 'BURST ', self.cpuBursts[0]
+		#print 'REDUCAO DE CPU BURST (quantum)'
+		#print 'tempo ', self.quantum
+		#print 'BURST ', self.cpuBursts[0]
 
 		if self.quantum > self.cpuBursts[0]:
 			self.decrementaCpuBursts()
 			return False
 		else:
 			self.cpuBursts[0] -= self.quantum
-			print 'Reduziu: ', self.cpuBursts[0]
+			#print 'Reduziu: ', self.cpuBursts[0]
 			return True
 
 	def converteTempo(self,tempo):

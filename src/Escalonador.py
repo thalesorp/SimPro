@@ -4,7 +4,7 @@
 #------------------------------------------------------#
 #         Graduação em Ciência da Computação           #
 #                                                      #
-#    Orientador: Diego Mello Silva                     # 
+#    Orientador: Diego Mello Silva                     #
 #    Aluno: Danilo da Silva Alves                      #
 #    Matrícula: 0002749                                #
 #                                                      #
@@ -25,7 +25,7 @@ def defineEscalonador(arg):
     elif arg == 'SJF':
         escalonador = SJF()
     elif arg == 'RR':
-        escalonador = RR()
+        escalonador = RR(5)
     elif arg == 'SRT':
         escalonador = SRT()
     elif arg == 'PFCS':
@@ -136,13 +136,13 @@ class FCFS(Escalonador):
 #-------------------------------------------------------------------------------------#
 # Round Robin (Chaveamento Circular)
 class RR(Escalonador):
-    def __init__(self):
+    def __init__(self, quantum):
         self.preemptivo = False
-        self.quantum = 5
+        self.quantum = quantum
         self.nome = 'RR'
 
     def selecionaProcesso(self,listaDeProcessos,tempo):
-        #Tira da cabeça e bota no rabo. (SILVA, D. M. 2017)
+        # "Tira da cabeça e bota no rabo." (SILVA, D. M. 2017)
         processo = listaDeProcessos.remove()
         return processo
 
@@ -246,11 +246,7 @@ class SRT(Escalonador):
         return None,None
 
 
-
-
 #-----------------------------------FUZZY--------------------------------------------------------#
-
-
 #Fuzzy Priority CPU Scheduling Algorithm - Bashir et al (2011)
 class FPCS(Escalonador):
     def __init__(self):
@@ -349,6 +345,7 @@ class FPCS(Escalonador):
 
     def desempate(self,processo,colecao):
         return None,None
+
 #------------------------------------------------------------------------------------------------#
 #Improved Fuzzy-Based CPU Scheduling - Behera et al (2012)
 class IFCS(Escalonador):
@@ -451,6 +448,7 @@ class IFCS(Escalonador):
                         if emExecucao.getPrioridadeDinamica() < processo.getPrioridadeDinamica():
                             return emExecucao,cpu
         return None,None
+
 #------------------------------------------------------------------------------------------------#
 #Proposed Fuzzy CPU Scheduling Algorithm - Ajmani (2013)
 class PFCS(Escalonador):

@@ -4,7 +4,7 @@
 #------------------------------------------------------#
 #         Graduação em Ciência da Computação           #
 #                                                      #
-#    Orientador: Diego Mello Silva                     # 
+#    Orientador: Diego Mello Silva                     #
 #    Aluno: Danilo da Silva Alves                      #
 #    Matrícula: 0002749                                #
 #                                                      #
@@ -15,42 +15,40 @@ from Eventos import *
 from Fel import *
 
 import sys
-
+import argparse
 
 def main():
-	
-	if len(sys.argv) < 4:
-		print 'Parametros incorretos'
-		print 'python Main.py [escalonador] [arquivo.txt] [P/D] '
-		quit()
+    # Método de escalonamento ("FCFS", "RR"...).
+    escalonador = None
+    # Arquivo de cenario ("cenarioD1.txt").
+    cenario = None
+    # Modo probabilístico ou determinístico ("P" ou "D").
+    modo = None
+    # Valor de quantum do escaloador Round Robin.
+    quantum = None
 
-	argEsc = sys.argv[1] #Escalonador: FCFS
-	argCen = sys.argv[2] #Cenario: Cenario33.txt
-	argDPr = sys.argv[3] #Modelo: P ou D (probabilistico ou deterministico)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('escalonador', metavar='scheduler', type=str, help='método de escalonamento')
+    parser.add_argument('quantum', metavar='quantum', type=int, help='valor de quantum')
+    parser.add_argument('arquivo', metavar='file', type=str, help='arquivo contendo o cenário')
+    parser.add_argument('modo', metavar='mode', type=str, help='modo probabilístico ou determinístico')
+    args = vars(parser.parse_args())
 
-	escalonador = defineEscalonador(argEsc)
+    escalonador = RR(args['quantum'])
+    cenario = args['arquivo']
+    modo = args['modo']
 
-	fel = Fel(escalonador,argCen,argDPr)
+    fel = Fel(escalonador, cenario, modo)
 
-	if argDPr == 'D':
-		while len(fel.getFel()) > 0:
-			fel.consome()
-			print '---------FEL---------'
-			print fel.fel
-			print 'Tempo Atual: ',fel.getTempo()		
-	elif argDPr == 'P':
-		while fel.getTempo() < fel.eventos.tempoSimulacao:
-			fel.consome()
-			print '---------FEL---------'
-			print fel.fel
-			print 'Tempo Atual: ',fel.getTempo()
-		#	raw_input('')
-	
+    if modo == 'D':
+        while len(fel.getFel()) > 0:
+            fel.consome()
 
+    elif modo == 'P':
+        while fel.getTempo() < fel.eventos.tempoSimulacao:
+            fel.consome()
 
-	fel.fimExecucao()
-	print '# -Fim de Execucao- #'
-
+    fel.fimExecucao()
 
 if __name__ == "__main__":
     main()

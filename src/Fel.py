@@ -42,8 +42,8 @@ class Fel(object):
 
     #Agenda o evento
     def agendaEvento(self,listaEventos):
-        print '----LISTA PARA AGENDAR------'
-        print listaEventos
+        #print '----LISTA PARA AGENDAR------'
+        #print listaEventos
         if len(listaEventos) > 0:
             for evento in listaEventos:
                 pos = 0
@@ -61,7 +61,7 @@ class Fel(object):
                     self.fel.insert(pos, evento)
         else:
             pass
-        print 'Agendado'
+        #print 'Agendado'
         
 
     #Desagenda Evento
@@ -75,39 +75,39 @@ class Fel(object):
                     if evento[3] == cpuId:
                         self.fel.pop(i)
                         break
-        print self.fel
+        #print self.fel
         #quit()
 
 
     def consome(self): #Consome o próximo evento da fel
         evento = self.getProximo()
         self.remove()
-        print evento
+        #print evento
 
         agendar = []
         if (evento[0] == 1): #fimChegadaProcessoCPU(self,tempo)#
             self.setTempo(evento[1])
             agendar = self.eventos.fimChegadaProcessoCPU(self.getTempo(),evento[2])
-            print 'Fim Chegada de processo'
+            #print 'Fim Chegada de processo'
             self.agendaEvento(agendar)
 
         elif (evento[0] == 2): #fimExecutaCPU(self,tempo,processo,cpu)#
             self.setTempo(evento[1])
-            print self.getTempo()
+            #print self.getTempo()
             agendar = self.eventos.fimExecutaCPU(self.getTempo(),evento[2],evento[3])
-            print 'Fim execucao na cpu'
+            #print 'Fim execucao na cpu'
             self.agendaEvento(agendar)
 
         elif (evento[0] == 3): #fimExecutaIO(self,tempo,processo)#
             self.setTempo(evento[1])
             agendar = self.eventos.fimExecutaIO(self.getTempo(),evento[2])
-            print 'Fim execucao IO'
+            #print 'Fim execucao IO'
             self.agendaEvento(agendar)
 
         elif (evento[0] == 4):#fimEncerraProcesso(self,tempo,processo)#
             self.setTempo(evento[1])
             agendar = self.eventos.fimEncerraProcesso(self.getTempo(),evento[2])
-            print 'Fim Encerra Processo'      
+            #print 'Fim Encerra Processo'      
             self.agendaEvento(agendar)
         elif (evento[0] == 0):#Desagendar algum evento na fel
             self.desagendaEvento(evento[1],evento[2])
@@ -120,12 +120,12 @@ class Fel(object):
         if len(self.fel) > 0:
             return self.fel[0]
         else:
-            print '# -Fim de Execucao- #'
+            #print '# -Fim de Execucao- #'
             sys.exit()
 
 
     def fimExecucao(self):
-        print 'Chamar Fim EVENTO'
+        #print 'Chamar Fim EVENTO'
         self.eventos.fimExecucao(self.getTempo())
 
     def toString(self):
