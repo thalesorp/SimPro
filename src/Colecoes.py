@@ -56,7 +56,7 @@ class Colecoes(object):
 		return None
 
 	def finalizaProcesso(self,ident):
-		for i in xrange(len(self.Processos)):
+		for i in range(len(self.Processos)):
 			if self.Processos[i].getProcessoId() == ident:
 				self.Finalizados.append(self.Processos[i])
 				del self.Processos[i]

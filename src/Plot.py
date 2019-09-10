@@ -23,7 +23,7 @@ class Plot(object):
 	def geraGraficoUtilizacaoGlobal(self,cpus):
 		x = cpus[0].getUtilizacao()[0]
 		y = []
-		for i in xrange(0,len(cpus[0].getUtilizacao()[2])):
+		for i in range(0,len(cpus[0].getUtilizacao()[2])):
 			aux = 0
 			for cpu in cpus:
 				aux += cpu.getUtilizacao()[2][i] #soma dos valores de utilização

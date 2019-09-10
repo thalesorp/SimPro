@@ -67,7 +67,7 @@ class Fel(object):
     #Desagenda Evento
     def desagendaEvento(self,processoId,cpuId): #desagenda evento
 
-        for i in xrange(len(self.fel)):
+        for i in range(len(self.fel)):
             evento = self.fel[i]
             #Buscando execucao agendada
             if evento[0] == 2: 

@@ -35,7 +35,7 @@ def defineEscalonador(arg):
     elif arg == 'FPCS':
         escalonador = FPCS() #fuzzy
     else:
-        print 'Método de escalonamento inválido.'
+        print('Método de escalonamento inválido.')
         quit()
 
     return escalonador
@@ -171,7 +171,7 @@ class SJF(Escalonador):
         if colecao.buscaCpuLivre() == None: #Se houver CPU livre, nao precisa de desempate
             for cpu in colecao.CPUs:
                 if not cpu.getDisponivel():
-                    print cpu.getDisponivel()
+                    print((cpu.getDisponivel()))
                     emExecucao = colecao.buscaProcesso(cpu.getProcessoAtual())
                     if emExecucao.getChegada() == processo.getChegada():
                         if processo.getCpuBurstAtual() < emExecucao.getCpuBurstAtual(): #Criterio de desempate
@@ -235,11 +235,11 @@ class SRT(Escalonador):
         if colecao.buscaCpuLivre() == None:
             for cpu in colecao.CPUs:
                 if not cpu.getDisponivel():
-                    print cpu.getDisponivel()
+                    print((cpu.getDisponivel()))
                     emExecucao = colecao.buscaProcesso(cpu.getProcessoAtual())
-                    print cpu.getProcessoAtual()
-                    print emExecucao #está none
-                    print processo
+                    print((cpu.getProcessoAtual()))
+                    print(emExecucao) #está none
+                    print(processo)
                     if emExecucao.getChegada() == processo.getChegada():
                         if processo.getCpuBurstAtual() < emExecucao.getCpuBurstAtual(): #Criterio de desempate
                             return emExecucao,cpu
@@ -367,14 +367,14 @@ class IFCS(Escalonador):
         self.recalculaPrioridades(filaDeProntos,tempo)
         processo = filaDeProntos.remove()
         #processo.setRriCongelado(True)
-        print processo.getProcessoId()
+        print((processo.getProcessoId()))
         return processo
 
 
     def recalculaPrioridades(self,filaDeProntos,tempo):
         responseR = 0.0
 
-        for i in xrange(len(filaDeProntos.queue)):
+        for i in range(len(filaDeProntos.queue)):
             if filaDeProntos.queue[i].getProcessoId() not in self.pId:
                 self.pId.append(filaDeProntos.queue[i].getProcessoId())
                 self.bti.append(filaDeProntos.queue[i].getCpuBurstAtual())
@@ -397,8 +397,8 @@ class IFCS(Escalonador):
                 #print 'response ', responseR
                 self.rri.append(filaDeProntos.queue[i].getRri())
 
-        for i in xrange(len(filaDeProntos.queue)):
-            for j in xrange(len(self.pId)):
+        for i in range(len(filaDeProntos.queue)):
+            for j in range(len(self.pId)):
                 if self.pId[j] == filaDeProntos.queue[i].getProcessoId():
                     #print filaDeProntos.queue[i].getProcessoId()
                     up = self.pti[j]/float((max(self.pti) + 1))
@@ -472,20 +472,20 @@ class PFCS(Escalonador):
 
     def recalculaPrioridades(self,filaDeProntos,tempo):
 
-        for i in xrange(len(filaDeProntos.queue)):
+        for i in range(len(filaDeProntos.queue)):
             if filaDeProntos.queue[i].getProcessoId() not in self.pId:
-                print 'Armazenar o ',filaDeProntos.queue[i].getProcessoId()
+                print(('Armazenar o ',filaDeProntos.queue[i].getProcessoId()))
                 self.pId.append(filaDeProntos.queue[i].getProcessoId())
                 self.bti.append(filaDeProntos.queue[i].getCpuBurstAtual())
                 self.pti.append(filaDeProntos.queue[i].getPrioridade())
 
-        for i in xrange(len(filaDeProntos.queue)):
-            for j in xrange(len(self.pId)):
+        for i in range(len(filaDeProntos.queue)):
+            for j in range(len(self.pId)):
                 if self.pId[j] == filaDeProntos.queue[i].getProcessoId():
-                    print 'id', filaDeProntos.queue[i].getProcessoId()
+                    print(('id', filaDeProntos.queue[i].getProcessoId()))
                     up = self.pti[j]/(float(max(self.pti)) + 1)
-                    print 'bti ',self.bti[j]
-                    print 'max bti ',max(self.bti)
+                    print(('bti ',self.bti[j]))
+                    print(('max bti ',max(self.bti)))
         
                     ub = 1 - (self.bti[j]/float(max(self.bti) + 1))
                     if filaDeProntos.queue[i].getPrioridade() == min(self.pti):
@@ -495,11 +495,11 @@ class PFCS(Escalonador):
                         pDinamica = max(up,ub)
                         filaDeProntos.queue[i].setPrioridadeDinamica(pDinamica)
 
-            print '--------------'
-            print 'up: ', up
-            print 'ub: ', ub
-            print 'id ', filaDeProntos.queue[i].getProcessoId()
-            print 'pd ', pDinamica
+            print('--------------')
+            print(('up: ', up))
+            print(('ub: ', ub))
+            print(('id ', filaDeProntos.queue[i].getProcessoId()))
+            print(('pd ', pDinamica))
             filaDeProntos.queue = sorted(filaDeProntos.queue, key = lambda processo: processo.getPrioridadeDinamica(), reverse = True)               
 
     def desempate(self,processo,colecao):
@@ -517,8 +517,8 @@ class PFCS(Escalonador):
                     if emExecucao.getChegada() == processo.getChegada():
                         self.recalculaPrioridades(lista,processo.getChegada())
                         if emExecucao.getPrioridadeDinamica() < processo.getPrioridadeDinamica():
-                            print 'V processo: ', processo.getProcessoId()
-                            print 'x emExecucao: ', emExecucao.getProcessoId()
+                            print(('V processo: ', processo.getProcessoId()))
+                            print(('x emExecucao: ', emExecucao.getProcessoId()))
                             return emExecucao,cpu
         return None,None
 

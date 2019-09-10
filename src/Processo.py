@@ -181,9 +181,9 @@ class Processo(object):
 
 	def reduzCpuBurst(self,valor):
 		tempo = valor - self.getInicioExecucao()
-		print 'REDUCAO DE CPU BURST'
-		print 'tempo ', tempo
-		print 'BURST ', self.cpuBursts[0]
+		print('REDUCAO DE CPU BURST')
+		print(('tempo ', tempo))
+		print(('BURST ', self.cpuBursts[0]))
 
 		self.cpuBursts[0] -= tempo
 
